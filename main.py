@@ -4,8 +4,19 @@ import pandas as pd
 import joblib
 import os
 from scipy.sparse import csr_matrix
+from fastapi.middleware.cors import CORSMiddleware
+
 
 app = FastAPI(title="Recommendation API")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # السماح لكل المواقع
+    allow_credentials=True,
+    allow_methods=["*"],  # السماح بكل الميثودات: GET, POST, إلخ
+    allow_headers=["*"],  # السماح بكل الهيدرز
+)
+
 
 # Load predicted ratings and matrix
 predicted_ratings = joblib.load("model_components/predicted_ratings.pkl")
