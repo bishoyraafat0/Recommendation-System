@@ -1,21 +1,21 @@
-# استخدم صورة بايثون 3.10 أساسية
+# Use a base Python 3.10 image
 FROM python:3.10-slim
 
-# تحديد مجلد العمل داخل الحاوية
+# Set the working directory inside the container
 WORKDIR /app
 
-# نسخ ملفات المتطلبات
+# Copy the requirements file
 COPY requirements.txt .
 
-# تثبيت المتطلبات
+# Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# نسخ باقي ملفات المشروع
+# Copy the rest of the project files
 COPY . .
 
-# تعيين متغير البيئة لمنع التوليد التلقائي لـ .pyc files
+# Set environment variables to prevent creation of .pyc files
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-# أمر تشغيل التطبيق عبر uvicorn على البورت 8000
+# Command to run the FastAPI app using uvicorn on port 8000
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
