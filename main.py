@@ -11,10 +11,10 @@ app = FastAPI(title="Recommendation API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # السماح لكل المواقع
-    allow_credentials=True,
-    allow_methods=["*"],  # السماح بكل الميثودات: GET, POST, إلخ
-    allow_headers=["*"],  # السماح بكل الهيدرز
+    allow_origins=["*"],   # Allow all origins
+    allow_credentials=True,# Allow cookies or authentication headers
+    allow_methods=["*"],  # Allow all HTTP methods (GET, POST, PUT, DELETE, etc.)
+    allow_headers=["*"],  # Allow all request headers (e.g., Authorization, Content-Type)
 )
 
 
@@ -35,7 +35,7 @@ class RecommendRequest(BaseModel):
 
 def recommend_items(user_id, num_recommendations=5):
     if user_id not in ratings_matrix.index:
-        # المستخدم مش موجود → رجّع منتجات شائعة
+         # If user is not in the matrix → return most popular products
         popular_products = most_popular.head(num_recommendations)
         return list(popular_products.index)
 
